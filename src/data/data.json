@@ -1,0 +1,26 @@
+{
+    "Public Chats": [{
+        "name": "General",
+        "messages": [{
+            "party": "receiver",
+            "text": "This is a test message"
+        },
+        {
+            "party": "sender",
+            "text": "HELLLLLOOOOOOO"
+        }]
+    }],
+    "Private Chats": [{
+        "name": "Cameron",
+        "messages": [{
+            "party": "receiver",
+            "text": "This was way too much work for what we have"
+        },
+        {
+            "party": "sender",
+            "text": "Lol"
+        }]
+    }]
+}
+
+

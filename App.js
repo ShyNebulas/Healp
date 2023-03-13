@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hey</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import Chats from './src/frontend/pages/Chats';
+import DirectMessage from './src/frontend/pages/DirectMessage';
+
+import data from './src/data/data.json';
+// Remebers navigational path
+const Stack = createNativeStackNavigator();
+
+class App extends React.Component {
+  render() {
+    const screens = [];
+    Object.values(data).forEach((entities) => {
+      Object.values(entities).forEach((entity) => {
+        screens.push({
+          name: entity.name,
+          messages: entity.messages
+        });
+      })
+    });
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Chats">
+          <Stack.Screen name="Chats" component={Chats} />
+          {screens.map((screen) => 
+            <Stack.Screen name={screen.name} children={() => <DirectMessage messages={screen.messages} />} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
+/*
+  - References: https://reactnavigation.org/docs/getting-started
+*/
+
+
+
+
