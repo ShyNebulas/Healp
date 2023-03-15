@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 8,
         height: 40,
+    },
+    sharelocation: {
+        backgroundColor: '#ADD8E6',
+        padding: 10,
+        margin: 8,
+        height: 40,
     }
 });
 

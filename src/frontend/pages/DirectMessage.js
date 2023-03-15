@@ -16,11 +16,11 @@ class DirectMessage extends React.Component {
   }
 
   render() {
-    return (    
+    return (
       <View>
-        <StatusBar style="auto" /> 
+        <StatusBar style="auto" />
         {this.props.messages.map((message) =>
-          <View style={{margin: 8, backgroundColor: getBackgroundColor(message.party)}}>
+          <View style={{margin: 8, backgroundColor: "#98FB98"}}>
             <Text style={{padding: 8}}>{message.text}</Text>
           </View>
         )}
@@ -34,6 +34,9 @@ class DirectMessage extends React.Component {
         <Pressable style={styles.submit}>
           <Text>Submit</Text>
         </Pressable>
+          <Pressable style={styles.sharelocation}>
+              <Text>Share Location</Text>
+          </Pressable>
       </View>
     );
   }
