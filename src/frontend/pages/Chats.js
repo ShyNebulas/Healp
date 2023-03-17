@@ -25,8 +25,8 @@ class Chats extends React.Component {
         });
         return (    
             <View style={styles.view}>
-                <StatusBar style="auto" /> 
-                <SectionList 
+                <StatusBar style="auto" />
+                <SectionList
                     sections={dataArray}
                     keyExtractor={(item, index) => item + index}
                     renderItem={({item}) => (
@@ -35,7 +35,7 @@ class Chats extends React.Component {
                     renderSectionHeader={({section: {title}}) => (
                         <Header name={title} />
                     )}
-                />  
+                />
             </View>
         );
     }
@@ -45,4 +45,4 @@ export default Chats;
 
 /*
     - References: https://reactnative.dev/docs/sectionlist
-*/ 
+*/

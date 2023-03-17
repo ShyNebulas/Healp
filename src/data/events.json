@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Coffee and Chat",
+    "description": "Meet us at Starbucks on Gilmore Street for coffee and meet up.",
+    "time": "3PM - 5PM",
+    "buttonText": "Interested"
+  },
+  {
+    "id": 2,
+    "title": "Art and Craft",
+    "description": "We are hosting an arts and crafts workshop at the Gilmour Library, Join us to learn and demonstrate your art skills",
+    "time": "1PM - 6PM",
+    "buttonText": "Interested"
+  }
+  ]

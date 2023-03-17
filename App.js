@@ -9,6 +9,8 @@ import { AntDesign } from '@expo/vector-icons';
 import Chatsinfo from './src/frontend/pages/Chats';
 import DirectMessage from './src/frontend/pages/DirectMessage';
 import MapView from "react-native-maps";
+import { Card } from 'react-native-elements';
+import Events from './src/frontend/pages/Events'
 
 import data from './src/data/data.json';
 // Remebers navigational path
@@ -46,14 +48,13 @@ function Chats(){
 }
 
 
-function Events(){
-  return(
-      <View>
-        <Text>Events</Text>
-      </View>
-  );
+function EventsScreen(){
+      return (
+            <View>
+              <Events />
+            </View>
+          );
 }
-
 
 const Tab = createBottomTabNavigator();
 
@@ -65,14 +66,14 @@ class App extends React.Component {
         <NavigationContainer>
           <Tab.Navigator>
 
-            <Tab.Screen name="Events" component={Events}
+            <Tab.Screen name="Events" component={EventsScreen}
                         options={{
                             tabBarLabel: 'Events',
                             tabBarIcon: ({ color, size }) => (
-                                <AntDesign name="team" size={24} color="black" />
-                            ),
-                        }}
-                />
+                                 <AntDesign name="team" size={24} color="black" />
+                                        ),
+                                    }}
+                            />
             <Tab.Screen name="Home" component={Home}
                         options={{
                             tabBarLabel: 'Home',
