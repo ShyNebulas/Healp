@@ -3,14 +3,19 @@ import { StatusBar } from 'expo-status-bar';
 import { SectionList, View, Text, Image, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
-
+import { useNavigation } from '@react-navigation/native';
+import AddEventForm from './src/frontend/pages/AddEvent';
 import data from '../../data/events.json';
 import catImage from "../assets/cat.jpg";
 
 class Events extends React.Component {
-  render() {
+
+  render({ navigation }) {
     return (
-      <View>
+    <View>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddEventForm')}>
+              <Text style={styles.buttonText}>Create New Event</Text>
+            </TouchableOpacity>
         {data.map((card) => (
           <TouchableOpacity key={card.id}>
             <Card>
