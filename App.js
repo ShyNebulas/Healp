@@ -10,7 +10,8 @@ import Chatsinfo from './src/frontend/pages/Chats';
 import DirectMessage from './src/frontend/pages/DirectMessage';
 import MapView from "react-native-maps";
 import { Card } from 'react-native-elements';
-import Events from './src/frontend/pages/Events'
+import Events from './src/frontend/pages/Events';
+import AddEventForm from './src/frontend/pages/AddEvent'
 
 import data from './src/data/data.json';
 // Remebers navigational path
@@ -47,21 +48,25 @@ function Chats(){
         );
 }
 
+const StackEvent = createStackNavigator();
 
 function EventsScreen(){
       return (
-            <View>
-              <Events />
-            </View>
-          );
-}
+          <NavigationContainer>
+            <StackEvent.Navigator>
+              <StackEvent.Screen name="Events" component={Events} />
+              <StackEvent.Screen name="AddEvent" component={AddEventForm} />
+            </StackEvent.Navigator>
+          </NavigationContainer>
+        );
+};
 
 const Tab = createBottomTabNavigator();
 
 class App extends React.Component {
   render() {
 
-      // will probs need to put declartion that code is from react website just for saftery
+      // will probs need to put declartion that code is from react website just for safety
     return (
         <NavigationContainer>
           <Tab.Navigator>
