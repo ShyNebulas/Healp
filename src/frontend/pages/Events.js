@@ -3,34 +3,35 @@ import { StatusBar } from 'expo-status-bar';
 import { SectionList, View, Text, Image, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
-import AddEventForm from './src/frontend/pages/AddEvent';
+import AddEventForm from './AddEvent';
 import data from '../../data/events.json';
 import catImage from "../assets/cat.jpg";
 
 class Events extends React.Component {
-
-  render({ navigation }) {
+  render() {
+    const StackEvent = createNativeStackNavigator();
     return (
-    <View>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddEventForm')}>
-              <Text style={styles.buttonText}>Create New Event</Text>
-            </TouchableOpacity>
-        {data.map((card) => (
-          <TouchableOpacity key={card.id}>
-            <Card>
-              <Image source={catImage} resizeMode="contain" />
-              <Text>{card.title}</Text>
-              <Text>{card.time}</Text>
-              <Text>{card.description}</Text>
-
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>{card.buttonText}</Text>
-              </TouchableOpacity>
-            </Card>
+        <View>
+          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('AddEventForm')}>
+            <Text style={styles.buttonText}>Create New Event</Text>
           </TouchableOpacity>
-        ))}
-      </View>
+          {data.map((card) => (
+            <TouchableOpacity key={card.id}>
+              <Card>
+                <Image source={catImage} resizeMode="contain" />
+                <Text>{card.title}</Text>
+                <Text>{card.time}</Text>
+                <Text>{card.description}</Text>
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>{card.buttonText}</Text>
+                </TouchableOpacity>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </View>
     );
   }
 }

@@ -39,7 +39,7 @@ function Chats(){
             })
         });
         return (
-                <Stack.Navigator initialRouteName="Chats">
+                <Stack.Navigator initialRouteName="Chats" independent="true">
                     <Stack.Screen name=" " component={Chatsinfo} />
                     {screens.map((screen) =>
                         <Stack.Screen name={screen.name} children={() => <DirectMessage messages={screen.messages} />} />
@@ -48,11 +48,11 @@ function Chats(){
         );
 }
 
-const StackEvent = createStackNavigator();
+const StackEvent = createNativeStackNavigator();
 
 function EventsScreen(){
       return (
-          <NavigationContainer>
+          <NavigationContainer independent="true">
             <StackEvent.Navigator>
               <StackEvent.Screen name="Events" component={Events} />
               <StackEvent.Screen name="AddEvent" component={AddEventForm} />
@@ -70,29 +70,36 @@ class App extends React.Component {
     return (
         <NavigationContainer>
           <Tab.Navigator>
-
-            <Tab.Screen name="Events" component={EventsScreen}
-                        options={{
-                            tabBarLabel: 'Events',
-                            tabBarIcon: ({ color, size }) => (
-                                 <AntDesign name="team" size={24} color="black" />
-                                        ),
-                                    }}
-                            />
-            <Tab.Screen name="Home" component={Home}
-                        options={{
-                            tabBarLabel: 'Home',
-                            tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="md-home-outline" size={24} color="black" />
-                            ),
-                        }}/>
-            <Tab.Screen name="Chats" component={Chats}
-                        options={{
-                            tabBarLabel: 'Chats',
-                            tabBarIcon: ({ color, size }) => (
-                                <SimpleLineIcons name="speech" size={24} color="black" />
-                            ),
-                        }}/>
+            <Tab.Screen 
+              name="Events" 
+              component={EventsScreen}
+              options={{
+                tabBarLabel: 'Events',
+                tabBarIcon: ({ color, size }) => (
+                  <AntDesign name="team" size={24} color="black" />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Home" 
+              component={Home}
+              options={{
+                tabBarLabel: 'Home',
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="md-home-outline" size={24} color="black" />
+                ),
+              }}
+            />
+            <Tab.Screen 
+              name="Chats" 
+              component={Chats}
+              options={{
+                tabBarLabel: 'Chats',
+                tabBarIcon: ({ color, size }) => (
+                  <SimpleLineIcons name="speech" size={24} color="black" />
+                ),
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
     );
