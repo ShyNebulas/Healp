@@ -52,12 +52,12 @@ const StackEvent = createNativeStackNavigator();
 
 function EventsScreen(){
       return (
-          <NavigationContainer independent="true">
-            <StackEvent.Navigator>
+          //<NavigationContainer initialRouteName="Events" independent="true">
+            <StackEvent.Navigator initialRouteName="Events" independent="true">
               <StackEvent.Screen name="Events" component={Events} />
               <StackEvent.Screen name="AddEvent" component={AddEventForm} />
             </StackEvent.Navigator>
-          </NavigationContainer>
+          //</NavigationContainer>
         );
 };
 

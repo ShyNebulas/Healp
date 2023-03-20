@@ -15,7 +15,7 @@ class Events extends React.Component {
     const StackEvent = createNativeStackNavigator();
     return (
         <View>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('AddEventForm')}>
+          <TouchableOpacity style={styles.button} onPress={({ navigation }) => this.props.navigation.navigate('AddEvent')}>
             <Text style={styles.buttonText}>Create New Event</Text>
           </TouchableOpacity>
           {data.map((card) => (
