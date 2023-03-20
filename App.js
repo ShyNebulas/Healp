@@ -1,107 +1,130 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { HeaderBackButton } from '@react-navigation/elements';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import Chatsinfo from './src/frontend/pages/Chats';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { Ionicons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
+
+import Chats from './src/frontend/pages/Chats';
 import DirectMessage from './src/frontend/pages/DirectMessage';
-import MapView from "react-native-maps";
-import { Card } from 'react-native-elements';
 import Events from './src/frontend/pages/Events';
-import AddEventForm from './src/frontend/pages/AddEvent'
+import AddEvent from './src/frontend/pages/AddEvent';
 
 import data from './src/data/data.json';
-// Remebers navigational path
 
-function Home(){
-  return(
-    <View>
-    <Text>Location:</Text>
-
-    <Text>Interested Events:</Text>
-    </View>
-);
+const getChatsTitle = (route) => {
+  return getFocusedRouteNameFromRoute(route) ?? 'Chats';
 }
 
-const Stack = createNativeStackNavigator();
+const getChatHeaderState = (route) => {
+  const name = getFocusedRouteNameFromRoute(route) ?? 'Chats';
+  return true ? name === 'Chats' : false;
+}
 
-function Chats(){
-        const screens = [];
-        Object.values(data).forEach((entities) => {
-            Object.values(entities).forEach((entity) => {
-                screens.push({
-                    name: entity.name,
-                    messages: entity.messages
-                });
-            })
+const ChatsStack = createNativeStackNavigator();
+class ChatsPage extends React.Component {
+  render() {
+    const screens = [];
+    Object.values(data).forEach((entities) => {
+      Object.values(entities).forEach((entity) => {
+        screens.push({
+          name: entity.name,
+          messages: entity.messages
         });
-        return (
-                <Stack.Navigator initialRouteName="Chats" independent="true">
-                    <Stack.Screen name=" " component={Chatsinfo} />
-                    {screens.map((screen) =>
-                        <Stack.Screen name={screen.name} children={() => <DirectMessage messages={screen.messages} />} />
-                    )}
-                </Stack.Navigator>
-        );
+      })
+    });
+    return(
+      <ChatsStack.Navigator>
+        <ChatsStack.Screen
+          name="Chats"
+          component={Chats}
+          options={{headerShown: false}}
+        />
+        {screens.map((screen) =>
+          <ChatsStack.Screen
+            name={screen.name}
+            children={() => <DirectMessage messages={screen.messages} />}
+            options={{headerShown: false}}
+          />
+        )}
+      </ChatsStack.Navigator>
+    );
+  }
 }
 
-const StackEvent = createNativeStackNavigator();
+const EventsStack = createNativeStackNavigator();
+class EventsPage extends React.Component {
+  render() {
+    return(
+      <EventsStack.Navigator initialRouteName="Events" independent="true">
+        <EventsStack.Screen name="Events" component={Events} />
+        <EventsStack.Screen name="AddEvent" component={AddEvent} />
+      </EventsStack.Navigator>
+    );
+  }
+}
 
-function EventsScreen(){
-      return (
-          //<NavigationContainer initialRouteName="Events" independent="true">
-            <StackEvent.Navigator initialRouteName="Events" independent="true">
-              <StackEvent.Screen name="Events" component={Events} />
-              <StackEvent.Screen name="AddEvent" component={AddEventForm} />
-            </StackEvent.Navigator>
-          //</NavigationContainer>
-        );
-};
+class HomePage extends React.Component {
+  render() {
+    return(
+      <View>
+        <StatusBar style="auto" />
+        <Text>Location:</Text>
+        <Text>Interested Events:</Text>
+      </View>
+    );
+  }
+}
 
-const Tab = createBottomTabNavigator();
-
+const AppTab = createBottomTabNavigator();
 class App extends React.Component {
   render() {
-
-      // will probs need to put declartion that code is from react website just for safety
     return (
-        <NavigationContainer>
-          <Tab.Navigator>
-            <Tab.Screen 
-              name="Events" 
-              component={EventsScreen}
-              options={{
-                tabBarLabel: 'Events',
-                tabBarIcon: ({ color, size }) => (
-                  <AntDesign name="team" size={24} color="black" />
-                ),
-              }}
-            />
-            <Tab.Screen 
-              name="Home" 
-              component={Home}
-              options={{
-                tabBarLabel: 'Home',
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="md-home-outline" size={24} color="black" />
-                ),
-              }}
-            />
-            <Tab.Screen 
-              name="Chats" 
-              component={Chats}
-              options={{
-                tabBarLabel: 'Chats',
-                tabBarIcon: ({ color, size }) => (
-                  <SimpleLineIcons name="speech" size={24} color="black" />
-                ),
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <AppTab.Navigator>
+          <AppTab.Screen
+            name="Events"
+            component={EventsPage}
+            options={{
+              tabBarLabel: 'Events',
+              tabBarIcon: () => (
+                <AntDesign name="team" size={24} color="black" />
+              ),
+              headerShown: false
+            }}
+          />
+          <AppTab.Screen
+            name="Home"
+            component={HomePage}
+            options={{
+              tabBarLabel: 'Home',
+              tabBarIcon: () => (
+                <Ionicons name="md-home-outline" size={24} color="black" />
+              )
+            }}
+          />
+          <AppTab.Screen
+            name="Chat"
+            component={ChatsPage}
+            options={({ route, navigation }) => ({
+              headerTitle: getChatsTitle(route),
+              headerLeft: () => (
+                <>
+                  {!getChatHeaderState(route) &&
+                    <HeaderBackButton onPress={() => navigation.navigate('Chats') } />
+                  }
+                </>
+              ),
+              tabBarLabel: 'Chats',
+              tabBarIcon: () => (
+                <SimpleLineIcons name="speech" size={24} color="black" />
+              )
+            })}
+          />
+        </AppTab.Navigator>
+      </NavigationContainer>
     );
   }
 }
@@ -111,4 +134,3 @@ export default App;
 /*
   - References: https://reactnavigation.org/docs/getting-started
 */
-
