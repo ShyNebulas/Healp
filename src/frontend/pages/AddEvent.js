@@ -23,10 +23,9 @@ const AddEventForm = ({ onSubmit }) => {
     };
     eventsData.push(newEvent);
     const jsonString = JSON.stringify(eventsData);
-    //const path = RNFS.DocumentDirectoryPath + '/data/events.json';
-
     const { StorageAccessFramework } = FileSystem;
 
+    //from stack overflow
     const saveFile = async () => {
       const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
       // Check if permission granted
@@ -43,18 +42,11 @@ const AddEventForm = ({ onSubmit }) => {
           console.log(e);
         });
       } else {
-        alert("You must allow permission to save.")
+        Alert.alert("You must allow permission to save.");
       }
     }
-/*
-    RNFS.writeFile(path, jsonString, 'utf8')
-      .then(() => {
-        Alert.alert('Success!', 'A new event has been created successfully!', [{ text: 'Okay' }]);
-      })
-      .catch((err) => {
-        Alert.alert('Error', 'Error creating event, please try again.', [{ text: 'Okay' }]);
-      });
-*/
+    saveFile();
+
     setTitle('');
     setDescription('');
     setTime('');
