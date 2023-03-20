@@ -25,7 +25,7 @@ const AddEventForm = ({ onSubmit }) => {
     const jsonString = JSON.stringify(eventsData);
     const { StorageAccessFramework } = FileSystem;
 
-    //from stack overflow
+    //from stack overflow: https://stackoverflow.com/questions/63460167/how-to-save-imported-json-file-with-expo-filesystem
     const saveFile = async () => {
       const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
       // Check if permission granted
