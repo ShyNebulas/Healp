@@ -88,7 +88,7 @@ class HomePage extends React.Component {
         justifyContent:'center',
         padding: 50
     },
-}
+});
 
 const AppTab = createBottomTabNavigator();
 class App extends React.Component {
