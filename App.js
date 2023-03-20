@@ -12,6 +12,9 @@ import DirectMessage from './src/frontend/pages/DirectMessage';
 import Events from './src/frontend/pages/Events';
 import AddEvent from './src/frontend/pages/AddEvent';
 
+import {SafeAreaView, StyleSheet} from 'react-native';
+import Carousel from './src/frontend/components/Carousel.js'
+
 import data from './src/data/data.json';
 
 const getChatsTitle = (route) => {
@@ -71,11 +74,20 @@ class HomePage extends React.Component {
     return(
       <View>
         <StatusBar style="auto" />
-        <Text>Location:</Text>
+        <SafeAreaView style = {styles.container}>
+          <Carousel />
+        </SafeAreaView>
         <Text>Interested Events:</Text>
       </View>
     );
   }
+  const styles = StyleSheet.create({
+    container: {
+        backgroundColour: '#fff',
+        alignItems: 'center',
+        justifyContent:'center',
+        padding: 50
+    },
 }
 
 const AppTab = createBottomTabNavigator();
