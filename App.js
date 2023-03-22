@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { Ionicons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import * as Location from 'expo-location';
 
 import Chats from './src/frontend/pages/Chats';
 import DirectMessage from './src/frontend/pages/DirectMessage';
@@ -28,6 +29,29 @@ const getChatHeaderState = (route) => {
 
 const ChatsStack = createNativeStackNavigator();
 class ChatsPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitude: null,
+      longitude: null
+    }
+  }
+
+  async getLocation() {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if(status === 'granted') {
+      const location = await Location.getCurrentPositionAsync({});
+      this.setState({
+        latitude: location['coords'].latitude,
+        longitude: location['coords'].longitude
+      });
+    } 
+  }
+
+  componentDidMount() {
+    this.getLocation();
+  }
+
   render() {
     const screens = [];
     Object.values(data).forEach((entities) => {
@@ -48,7 +72,7 @@ class ChatsPage extends React.Component {
         {screens.map((screen) =>
           <ChatsStack.Screen
             name={screen.name}
-            children={() => <DirectMessage messages={screen.messages} />}
+            children={() => <DirectMessage latitude={this.state.latitude} longitude={this.state.longitude} messages={screen.messages} />}
             options={{headerShown: false}}
           />
         )}
