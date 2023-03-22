@@ -16,7 +16,8 @@ import AddEvent from './src/frontend/pages/AddEvent';
 import {SafeAreaView, StyleSheet,} from 'react-native';
 import Carousel from './src/frontend/components/Carousel.js'
 
-import data from './src/data/data.json';
+import messageData from './src/data/data.json';
+import eventsData from './src/data/events.json';
 
 const getChatsTitle = (route) => {
   return getFocusedRouteNameFromRoute(route) ?? 'Chats';
@@ -54,7 +55,7 @@ class ChatsPage extends React.Component {
 
   render() {
     const screens = [];
-    Object.values(data).forEach((entities) => {
+    Object.values(messageData).forEach((entities) => {
       Object.values(entities).forEach((entity) => {
         screens.push({
           name: entity.name,
@@ -83,11 +84,30 @@ class ChatsPage extends React.Component {
 
 const EventsStack = createNativeStackNavigator();
 class EventsPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: eventsData
+    }
+    this.handler = this.handler.bind(this);
+    this.getData = this.getData.bind(this);
+  }
+
+  handler(data) {
+    this.setState({
+      data: data
+    }); 
+  }
+
+  getData() {
+    return this.state.data;
+  }
+
   render() {
     return(
       <EventsStack.Navigator initialRouteName="Events" independent="true">
-        <EventsStack.Screen name="Events" component={Events} />
-        <EventsStack.Screen name="AddEvent" component={AddEvent} />
+        <EventsStack.Screen name="Events" component={Events} initialParams={{ data: this.state.data, getData: this.getData}} />
+        <EventsStack.Screen name="AddEvent" component={AddEvent} initialParams={{ data: this.state.data, handler: this.handler}} />
       </EventsStack.Navigator>
     );
   }

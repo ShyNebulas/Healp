@@ -1,37 +1,51 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { SectionList, View, Text, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
-import AddEventForm from './AddEvent';
-import data from '../../data/events.json';
 import catImage from "../assets/cat.jpg";
 
 class Events extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: this.props.route.params.getData() }
+  }
+
+  updateData() {
+    this.setState({
+      data: this.props.route.params.getData()
+    });
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.updateData(), 1000); 
+  }
+  
   render() {
-    const StackEvent = createNativeStackNavigator();
     return (
+      <>
+        <StatusBar style="auto" />
         <View>
-          <TouchableOpacity style={styles.button} onPress={({ navigation }) => this.props.navigation.navigate('AddEvent')}>
+          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('AddEvent')}>
             <Text style={styles.buttonText}>Create New Event</Text>
           </TouchableOpacity>
-          {data.map((card) => (
-            <TouchableOpacity key={card.id}>
-              <Card>
-                <Image source={catImage} resizeMode="contain" />
-                <Text>{card.title}</Text>
-                <Text>{card.time}</Text>
-                <Text>{card.description}</Text>
-                <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText}>{card.buttonText}</Text>
+          <ScrollView style={{marginBottom: 72}}>
+            {this.state.data.map((card) => (
+              <TouchableOpacity key={card.id}>
+                <Card>
+                    <Image source={catImage} resizeMode="contain" />
+                    <Text>{card.title}</Text>
+                    <Text>{card.time}</Text>
+                    <Text>{card.description}</Text>
+                    <TouchableOpacity style={styles.button}>
+                      <Text style={styles.buttonText}>{card.buttonText}</Text>
+                    </TouchableOpacity>
+                  </Card>
                 </TouchableOpacity>
-              </Card>
-            </TouchableOpacity>
-          ))}
-        </View>
+              ))}
+            </ScrollView>
+          </View>
+          </>
     );
   }
 }
