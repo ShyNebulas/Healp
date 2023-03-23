@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TextInput, Button} from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 class AddEvent extends React.Component {
   constructor(props) {
@@ -24,15 +25,48 @@ class AddEvent extends React.Component {
   render() {
     return(
       <View>
-        <Text>Add a new event</Text>
-        <TextInput placeholder="Title" value={this.state.title} onChangeText={(title) => this.setState({title})} />
-        <TextInput placeholder="Description" value={this.state.description} onChangeText={(description) => this.setState({description})} />
-        <TextInput placeholder="E.g : 3PM - 5PM" value={this.state.time} onChangeText={(time) => this.setState({time})} />
-        <Button title="Add Event" onPress={() => this.addNewEvent()} />
+        <Text style={styles.topText}>Enter details for your new event:</Text>
+        <TextInput style={styles.textIn} placeholder="Title" value={this.state.title} onChangeText={(title) => this.setState({title})} />
+        <TextInput style={styles.textIn} placeholder="Description" value={this.state.description} onChangeText={(description) => this.setState({description})} />
+        <TextInput style={styles.textIn} placeholder="E.g : 3PM - 5PM" value={this.state.time} onChangeText={(time) => this.setState({time})} />
+        <TouchableOpacity style={styles.button} title="" onPress={() => this.addNewEvent()}>
+            <Text style={styles.buttonText}> Add Event </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    button: {
+      backgroundColor: '#2E86C1',
+      padding: 10,
+      borderRadius: 5,
+      margin: 20,
+      marginTop: 60,
+    },
+    buttonText: {
+      color: '#FFFFFF',
+      textAlign: 'center',
+      fontSize: 20,
+    },
+    textIn: {
+      padding: 10,
+      borderRadius: 5,
+      fontSize: 16,
+      marginTop: 10,
+      margin: 20,
+      backgroundColor: '#DDD'
+    },
+    topText: {
+      padding: 10,
+      borderRadius: 5,
+      fontSize: 16,
+      marginTop: 10,
+      marginBottom: 20,
+      marginLeft: 20,
+    },
+  });
 
 export default AddEvent;
 
