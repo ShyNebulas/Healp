@@ -3,22 +3,22 @@
         "name": "General",
         "messages": [{
             "party": "receiver",
-            "text": "This is a test message"
+            "text": "Hey everyone, we are planning to have..."
         },
         {
             "party": "sender",
-            "text": "HELLLLLOOOOOOO"
+            "text": "That sounds awesome!"
         }]
     }],
     "Private Chats": [{
         "name": "Cameron",
         "messages": [{
             "party": "receiver",
-            "text": "This was way too much work for what we have"
+            "text": "Where are you?"
         },
         {
             "party": "sender",
-            "text": "Lol"
+            "text": "My location: Link"
         }]
     }]
 }

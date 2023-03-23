@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     image: {
 
         width: ITEM_WIDTH,
-        height: 220,
+        height: 400,
     },
     header: {
         color: "#222",
