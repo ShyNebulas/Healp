@@ -27,7 +27,7 @@ class DirectMessage extends React.Component {
           />
         </SafeAreaView>
         <Pressable style={styles.directMessageSubmit}>
-          <Text>Submit</Text>
+          <Text style={styles.directMessageSubmitText}>Submit</Text>
         </Pressable>
         <Pressable 
             onPress={() => {
@@ -37,7 +37,7 @@ class DirectMessage extends React.Component {
               ]);
             }} 
             style={styles.directMessageShare}>
-          <Text>Share Location</Text>
+          <Text style={styles.directMessageShareText}>Share Location</Text>
         </Pressable>
       </View>
     );

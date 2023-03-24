@@ -63,23 +63,32 @@ const styles = StyleSheet.create({
     directMessageBackgroundReceiver: { backgroundColor: "lightgray", margin: 8 },
     directMessageText: { padding: 8 },
     directMessageInput: {
-        borderColor: "#F9C2FF",
+        borderColor: "#2E86C1",
         borderWidth: 1,
         height: 40,
         margin: 15,
         padding: 5      
     },
     directMessageSubmit: {
-        backgroundColor: "#F9C2FF",
+        backgroundColor: '#2E86C1',
+        borderRadius: 5,
         height: 40,
         margin: 8,
         padding: 10
     },
+    directMessageSubmitText: { 
+        color: "#FFFFFF", 
+        textAlign: "center"
+    },
     directMessageShare: {
         backgroundColor: "#ADD8E6",
+        borderRadius: 5,
         height: 40,
         margin: 8,
         padding: 10
+    },
+    directMessageShareText: {
+        textAlign: "center"
     },
 
     entityBody: {
