@@ -6,7 +6,7 @@ import styles from '../styles';
 class Header extends React.Component {
     render() {
         return(
-            <Text style={styles.header}>{this.props.name}</Text>
+            <Text style={styles.headerTitle}>{this.props.name}</Text>
         );
     }
 }

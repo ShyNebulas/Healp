@@ -1,195 +1,61 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import { HeaderBackButton } from '@react-navigation/elements';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { Ionicons, SimpleLineIcons, AntDesign } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
-import * as Location from 'expo-location';
+import { AntDesign, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderBackButton } from "@react-navigation/elements";
+import { getFocusedRouteNameFromRoute, NavigationContainer } from "@react-navigation/native";
 
-import Chats from './src/frontend/pages/Chats';
-import DirectMessage from './src/frontend/pages/DirectMessage';
-import Events from './src/frontend/pages/Events';
-import AddEvent from './src/frontend/pages/AddEvent';
-
-import {SafeAreaView, StyleSheet,} from 'react-native';
-import Carousel from './src/frontend/components/Carousel.js'
-
-import messageData from './src/data/data.json';
-import eventsData from './src/data/events.json';
-
-const getChatsTitle = (route) => {
-  return getFocusedRouteNameFromRoute(route) ?? 'Chats';
-}
+import ChatsNavigator from "./src/navigators/ChatsNavigator";
+import EventsNavigator from "./src/navigators/EventsNavigator";
+import Home from "./src/pages/Home";
 
 const getChatHeaderState = (route) => {
-  const name = getFocusedRouteNameFromRoute(route) ?? 'Chats';
-  return true ? name === 'Chats' : false;
+  const name = getFocusedRouteNameFromRoute(route) ?? "Chats";
+  return true ? name === "Chats" : false;
 }
 
-const ChatsStack = createNativeStackNavigator();
-class ChatsPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      latitude: null,
-      longitude: null
-    }
-  }
-
-  async getLocation() {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if(status === 'granted') {
-      const location = await Location.getCurrentPositionAsync({});
-      this.setState({
-        latitude: location['coords'].latitude,
-        longitude: location['coords'].longitude
-      });
-    } 
-  }
-
-  componentDidMount() {
-    this.getLocation();
-  }
-
-  render() {
-    const screens = [];
-    Object.values(messageData).forEach((entities) => {
-      Object.values(entities).forEach((entity) => {
-        screens.push({
-          name: entity.name,
-          messages: entity.messages
-        });
-      })
-    });
-    return(
-      <ChatsStack.Navigator>
-        <ChatsStack.Screen
-          name="Chats"
-          component={Chats}
-          options={{headerShown: false}}
-        />
-        {screens.map((screen) =>
-          <ChatsStack.Screen
-            name={screen.name}
-            children={() => <DirectMessage latitude={this.state.latitude} longitude={this.state.longitude} messages={screen.messages} />}
-            options={{headerShown: false}}
-          />
-        )}
-      </ChatsStack.Navigator>
-    );
-  }
-}
-
-const EventsStack = createNativeStackNavigator();
-class EventsPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: eventsData
-    }
-    this.handler = this.handler.bind(this);
-    this.getData = this.getData.bind(this);
-  }
-
-  handler(data) {
-    this.setState({
-      data: data
-    }); 
-  }
-
-  getData() {
-    return this.state.data;
-  }
-
-  render() {
-    return(
-      <EventsStack.Navigator initialRouteName="Events" independent="true">
-        <EventsStack.Screen name="Events" component={Events} initialParams={{ data: this.state.data, getData: this.getData}} />
-        <EventsStack.Screen name="AddEvent" component={AddEvent} initialParams={{ data: this.state.data, handler: this.handler}} />
-      </EventsStack.Navigator>
-    );
-  }
-}
-
-class HomePage extends React.Component {
-    render() {
-        return (
-            <View>
-                <StatusBar style="auto"/>
-                <SafeAreaView style={styles.container}>
-                    <Carousel/>
-                </SafeAreaView>
-                <Text>Interested Events:</Text>
-            </View>
-        );
-    }
-}
-
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColour: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 50
-    }
-});
-
-const AppTab = createBottomTabNavigator();
 class App extends React.Component {
   render() {
+    const Tab = createBottomTabNavigator();
     return (
       <NavigationContainer>
-        <AppTab.Navigator>
-          <AppTab.Screen
+        <Tab.Navigator>
+          <Tab.Screen
             name="Events"
-            component={EventsPage}
+            component={EventsNavigator}
             options={{
-              tabBarLabel: 'Events',
-              tabBarIcon: () => (
-                <AntDesign name="team" size={24} color="black" />
-              ),
-              headerShown: false
+              headerShown: false,
+              tabBarIcon: () => ( <AntDesign color="black" name="team" size={24} /> ),
+              tabBarLabel: "Events"
             }}
           />
-          <AppTab.Screen
+          <Tab.Screen
             name="Home"
-            component={HomePage}
+            component={Home}
             options={{
-              tabBarLabel: 'Home',
-              tabBarIcon: () => (
-                <Ionicons name="md-home-outline" size={24} color="black" />
-              )
+              tabBarIcon: () => ( <Ionicons color="black" name="md-home-outline" size={24} /> ),
+              tabBarLabel: "Home"
             }}
           />
-          <AppTab.Screen
+          <Tab.Screen
             name="Chat"
-            component={ChatsPage}
-            options={({ route, navigation }) => ({
-              headerTitle: getChatsTitle(route),
+            component={ChatsNavigator}
+            options={({ navigation, route }) => ({
               headerLeft: () => (
                 <>
                   {!getChatHeaderState(route) &&
-                    <HeaderBackButton onPress={() => navigation.navigate('Chats') } />
+                    <HeaderBackButton onPress={() => navigation.navigate("Chats") } />
                   }
                 </>
               ),
-              tabBarLabel: 'Chats',
-              tabBarIcon: () => (
-                <SimpleLineIcons name="speech" size={24} color="black" />
-              )
+              headerTitle: getFocusedRouteNameFromRoute(route) ?? "Chats",
+              tabBarIcon: () => ( <SimpleLineIcons color="black" name="speech" size={24} /> ),
+              tabBarLabel: "Chats"
             })}
           />
-        </AppTab.Navigator>
+        </Tab.Navigator>
       </NavigationContainer>
     );
   }
 }
 
 export default App;
-
-/*
-  - References: https://reactnavigation.org/docs/getting-started
-*/

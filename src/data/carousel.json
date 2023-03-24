@@ -1,0 +1,19 @@
+{
+    "Mental Health": {
+        "description": "Tips on how to take care of yourself mentally.",
+        "image": "https://cdn.pixabay.com/photo/2015/12/05/01/09/heart-1077724_1280.jpg",
+        "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/"
+    },
+    "Working Out": {
+        "description": "Try out new activities to keep your body fit!",
+        "image": "https://cdn.pixabay.com/photo/2018/01/01/01/56/yoga-3053488_1280.jpg",
+        "url": "https://www.healthline.com/nutrition/how-to-start-exercising"
+    },
+    "Learn New Skills": {
+        "description": "Learn new skills to keep your mind and memory busy.",
+        "image": "https://cdn.pixabay.com/photo/2020/04/14/17/44/guitar-5043613_1280.jpg",
+        "title": "Learn New Skills",
+        "url": "https://www.mentalfloss.com/article/572087/learn-skills-on-youtube"
+    }
+}
+
